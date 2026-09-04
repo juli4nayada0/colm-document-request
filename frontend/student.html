@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - COLM Registrar</title>
+    <link rel="stylesheet" href="css/reset.css?v=green20260903">
+    <link rel="stylesheet" href="css/main.css?v=green20260903">
+    <link rel="stylesheet" href="css/forms.css?v=green20260903">
+    <link rel="stylesheet" href="css/tables.css?v=green20260903">
+    <link rel="stylesheet" href="css/modals.css?v=green20260903">
+    <link rel="stylesheet" href="css/notifications.css?v=green20260903">
+    <link rel="stylesheet" href="css/responsive.css?v=green20260903">
+    <link rel="stylesheet" href="css/ui-refresh.css?v=request-popup-back-20260904">
+    <link rel="stylesheet" href="css/orgchart.css?v=green20260903">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="appSidebar">
+            <div class="sidebar-header">
+                <div class="institution-logo">
+                    <img src="colmlogo.jpg" alt="COLM logo">
+                </div>
+                <div class="sidebar-title">
+                    <h2>STUDENT PORTAL</h2>
+                    <p>COLM Registrar</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Navigation</div>
+                <a href="#dashboard" class="nav-item active" data-view="dashboard">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#wizard" class="nav-item" data-view="wizard">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    <span>Request Document</span>
+                </a>
+                <a href="#catalog" class="nav-item" data-view="catalog">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    <span>Document Catalog</span>
+                </a>
+                <a href="#requests" class="nav-item" data-view="requests">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    <span>My Requests</span>
+                </a>
+                <a href="#orgchart" class="nav-item" data-view="orgchart">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>About / Org Chart</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-quick-profile">
+                    <div class="user-meta">
+                        <span class="user-meta-name" id="sidebarUserName">Loading...</span>
+                        <span class="user-meta-role" id="sidebarUserRole">Student</span>
+                    </div>
+                    <button type="button" class="btn-logout" onclick="auth.logout()" title="Logout">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <main class="app-main">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button type="button" class="btn-toggle-sidebar" id="btnToggleSidebar">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                    <div class="page-title-wrap">
+                        <h1>Registrar Student Portal</h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Notification Bell Dropdown -->
+                    <div class="notif-dropdown-wrapper">
+                        <button type="button" class="btn-notif-bell" id="notifBellBtn" title="Notifications">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                            <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
+                        </button>
+                        <div class="notif-dropdown-menu" id="notifDropdownMenu">
+                            <div class="notif-header">
+                                <h4>Notifications</h4>
+                                <button type="button" id="markAllReadBtn">Mark all as read</button>
+                            </div>
+                            <div class="notif-list" id="notifList"></div>
+                        </div>
+                    </div>
+
+                    <!-- User Header Pill -->
+                    <div class="user-header-pill">
+                        <div class="user-avatar" id="headerUserAvatar">S</div>
+                        <div class="user-info-text">
+                            <span class="user-info-name" id="headerUserName">Juan Dela Cruz</span>
+                            <span class="user-info-role" id="headerUserRole">2026-00001</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Views Container -->
+            <div class="app-content">
+
+                <!-- VIEW 1: DASHBOARD -->
+                <div class="view-pane" id="view_dashboard">
+                    <!-- Welcome Card -->
+                    <div class="card" style="background: linear-gradient(135deg, var(--primary-800) 0%, var(--primary-700) 100%); color:#FFFFFF; border:none; margin-bottom:1.5rem;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+                            <div>
+                                <span style="font-size:0.75rem;color:var(--gold-400);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Officially Enrolled • First Semester 2026–2027</span>
+                                <h2 style="font-size:1.4rem;font-weight:800;margin-top:2px;">Welcome, <span id="dashStudentName">Student</span></h2>
+                                <p style="font-size:0.875rem;color:rgba(255,255,255,0.85);margin-top:4px;">
+                                    Track the real-time status of your documents, submit new requests, and view credentials.
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-gold" onclick="StudentApp.openRequestPopup()">
+                                + Request a Document
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- KPI Statistics -->
+                    <div class="stats-grid">
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="">
+                            <div class="stat-icon"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h7l3 3v13a2 2 0 01-2 2z"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statTotalRequests">0</span>
+                                <span class="stat-label">Total Requests</span>
+                            </div>
+                        </div>
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="PROCESSING">
+                            <div class="stat-icon" style="background:#FEF3C7;color:#D97706;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" stroke-width="2" d="M12 8v4l2 2"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statPendingRequests">0</span>
+                                <span class="stat-label">In Processing</span>
+                            </div>
+                        </div>
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="PENDING PAYMENT">
+                            <div class="stat-icon" style="background:#EFF6FF;color:#2563EB;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-width="2" d="M3 10h18"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statForPayment">0</span>
+                                <span class="stat-label">Pending Payment</span>
+                            </div>
+                        </div>
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="READY FOR RELEASE">
+                            <div class="stat-icon" style="background:#ECFDF5;color:#059669;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statReadyRelease">0</span>
+                                <span class="stat-label">Ready for Claiming</span>
+                            </div>
+                        </div>
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="COMPLETED">
+                            <div class="stat-icon" style="background:#D1FAE5;color:#059669;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statReleased">0</span>
+                                <span class="stat-label">Released / Completed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Requests Table Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">My Recent Requests</h3>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="navigation.switchView('requests')">View All</button>
+                        </div>
+
+                        <!-- Filter / Search Toolbar -->
+                        <div class="filter-toolbar">
+                            <div class="search-box-wrapper">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                <input type="text" class="search-input" id="reqSearchInput" placeholder="Search by tracking number, document...">
+                            </div>
+                            <div class="filter-group-items">
+                                <select class="filter-select" id="reqStatusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="REQUEST SUBMITTED">Submitted</option>
+                                    <option value="FOR VERIFICATION">For Verification</option>
+                                    <option value="PENDING PAYMENT">Pending Payment</option>
+                                    <option value="PAID">PAID</option>
+                                    <option value="FOR PROCESSING">For Processing</option>
+                                    <option value="PROCESSING">Processing</option>
+                                    <option value="FOR REVIEW/APPROVAL">For Review</option>
+                                    <option value="READY FOR RELEASE">Ready for Release</option>
+                                    <option value="RELEASED">Released</option>
+                                    <option value="COMPLETED">Completed</option>
+                                    <option value="ON HOLD">On Hold</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tracking #</th>
+                                        <th>Document</th>
+                                        <th>Fee</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                        <th>Timeline</th>
+                                        <th class="actions-cell">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myRequestsTbody"></tbody>
+                            </table>
+                        </div>
+
+                        <div id="reqPagination" class="pagination-container"></div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: MULTI-STEP REQUEST WIZARD (Steps 1-5) -->
+                <div class="view-pane" id="view_wizard" style="display:none;">
+                    <a href="#dashboard" class="btn-back" onclick="StudentApp.closeRequestPopup(); return false;">&larr; Back</a>
+
+                    <div class="card request-wizard-shell" style="max-width:860px;margin:0 auto;">
+                        <h2 style="font-size:1.35rem;font-weight:800;color:var(--slate-900);text-align:center;margin-bottom:0.25rem;">
+                            Document Request Form
+                        </h2>
+                        <p style="font-size:0.85rem;color:var(--slate-600);text-align:center;margin-bottom:2rem;">
+                            Follow the 5-step application process to submit an official registrar credential request.
+                        </p>
+
+                        <!-- Wizard Track -->
+                        <div class="wizard-steps-track">
+                            <div class="wizard-step active">
+                                <div class="wizard-step-circle">1</div>
+                                <span class="wizard-step-label">Document</span>
+                            </div>
+                            <div class="wizard-step">
+                                <div class="wizard-step-circle">2</div>
+                                <span class="wizard-step-label">Purpose</span>
+                            </div>
+                            <div class="wizard-step">
+                                <div class="wizard-step-circle">3</div>
+                                <span class="wizard-step-label">Requirements</span>
+                            </div>
+                            <div class="wizard-step">
+                                <div class="wizard-step-circle">4</div>
+                                <span class="wizard-step-label">Review</span>
+                            </div>
+                            <div class="wizard-step">
+                                <div class="wizard-step-circle">5</div>
+                                <span class="wizard-step-label">Success</span>
+                            </div>
+                        </div>
+
+                        <!-- Wizard Panes -->
+                        <form id="wizardForm" onsubmit="event.preventDefault();">
+                            <!-- Step 1: Document Selection -->
+                            <div class="wizard-step-pane active" id="stepPane1">
+                                <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:var(--slate-800);">Step 1: Choose Document & Quantity</h3>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="wizardDocSelect">
+                                        Requested Document <span class="required-star">*</span>
+                                    </label>
+                                    <select class="form-control" id="wizardDocSelect" required></select>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="wizardCopies">Number of Copies <span class="required-star">*</span></label>
+                                        <input type="number" id="wizardCopies" class="form-control" min="1" max="10" value="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Estimated Fee Assessment</label>
+                                        <div style="padding:0.65rem 0.85rem;background:var(--slate-50);border:1px solid var(--slate-300);border-radius:var(--radius-md);font-weight:700;color:var(--primary-700);">
+                                            <span id="wizardTotalFee">₱0.00</span> (<span id="wizardDocFee">₱0.00</span> / copy)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="wizard-actions">
+                                    <span></span>
+                                    <button type="button" class="btn btn-primary" onclick="StudentApp.goToStep(2)">Proceed to Purpose &rarr;</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Purpose & Delivery -->
+                            <div class="wizard-step-pane" id="stepPane2">
+                                <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:var(--slate-800);">Step 2: Purpose & Delivery Method</h3>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="wizardPurpose">Specific Purpose of Request <span class="required-star">*</span></label>
+                                    <input type="text" id="wizardPurpose" class="form-control" placeholder="e.g. Scholarship application, PRC exam, Employment, Transfer" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="wizardReleaseMethod">Preferred Release Method <span class="required-star">*</span></label>
+                                        <select class="form-control" id="wizardReleaseMethod" required>
+                                            <option value="Personal Claiming">Personal Claiming at Registrar</option>
+                                            <option value="Authorized Representative">Authorized Representative Claiming</option>
+                                            <option value="Digital Copy">Digital Certified Copy (if permitted)</option>
+                                            <option value="Other Approved Delivery">Other Approved Delivery</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Estimated Claiming Date</label>
+                                        <div style="padding:0.65rem 0.85rem;background:var(--slate-50);border:1px solid var(--slate-300);border-radius:var(--radius-md);color:var(--slate-500);font-size:0.875rem;">
+                                            Determined by Registrar Processing Time
+                                        </div>
+                                        <input type="hidden" id="wizardClaimingDate" value="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="wizardInstructions">Additional Instructions / Remarks</label>
+                                    <textarea id="wizardInstructions" class="form-control" placeholder="Any special notes or requirements for the Registrar Office"></textarea>
+                                </div>
+
+                                <div class="wizard-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="StudentApp.goToStep(1)">&larr; Back</button>
+                                    <button type="button" class="btn btn-primary" onclick="StudentApp.goToStep(3)">Proceed to Requirements &rarr;</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Requirements Upload -->
+                            <div class="wizard-step-pane" id="stepPane3">
+                                <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:var(--slate-800);">Step 3: Upload Supporting Requirements</h3>
+                                <div id="wizardReqsList"></div>
+
+                                <div class="wizard-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="StudentApp.goToStep(2)">&larr; Back</button>
+                                    <button type="button" class="btn btn-primary" onclick="StudentApp.goToStep(4)">Review Summary &rarr;</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Summary Review -->
+                            <div class="wizard-step-pane" id="stepPane4">
+                                <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:var(--slate-800);">Step 4: Review Application Summary</h3>
+
+                                <div style="background:var(--slate-50);padding:1.5rem;border-radius:var(--radius-md);border:1px solid var(--border-color);margin-bottom:1.5rem;">
+                                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:1rem;">
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Document</span>
+                                            <div style="font-weight:700;font-size:1rem;" id="revDocName">—</div>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Copies</span>
+                                            <div style="font-weight:600;" id="revCopies">—</div>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Total Fee</span>
+                                            <div style="font-weight:700;color:var(--primary-700);font-size:1.1rem;" id="revTotalFee">—</div>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Release Method</span>
+                                            <div style="font-weight:600;" id="revReleaseMethod">—</div>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Purpose</span>
+                                            <div style="font-weight:600;" id="revPurpose">—</div>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Claiming Date</span>
+                                            <div style="font-weight:600;" id="revClaimingDate">—</div>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Attached Files</span>
+                                            <div style="font-weight:600;" id="revUploadedCount">—</div>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:0.75rem;color:var(--slate-500);">Additional Notes</span>
+                                            <div style="font-weight:600;" id="revInstructions">—</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="wizard-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="StudentApp.goToStep(3)">&larr; Back</button>
+                                    <button type="button" class="btn btn-primary" id="btnSubmitWizard" onclick="StudentApp.submitWizardRequest()">
+                                        Submit Request &rarr;
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 5: Success Screen -->
+                            <div class="wizard-step-pane" id="stepPane5">
+                                <div style="text-align:center;padding:2rem 1rem;">
+                                    <div style="width:64px;height:64px;background:#D1FAE5;color:#059669;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2rem;">
+                                        Selected
+                                    </div>
+                                    <h3 style="font-size:1.4rem;font-weight:800;color:var(--slate-900);margin-bottom:0.25rem;">
+                                        Request Successfully Submitted!
+                                    </h3>
+                                    <p style="font-size:0.875rem;color:var(--slate-600);margin-bottom:1.5rem;">
+                                        Your request is now Pending Payment. Please pay the assessed amount in person at the Registrar/Personnel office. Online payment is not available.
+                                    </p>
+
+                                    <div style="background:var(--slate-50);padding:1.25rem;border-radius:var(--radius-md);max-width:440px;margin:0 auto 1.5rem;border:1px solid var(--border-color);">
+                                        <span style="font-size:0.75rem;color:var(--slate-500);text-transform:uppercase;font-weight:700;">Your Tracking Number</span>
+                                        <div style="font-size:1.6rem;font-weight:900;color:var(--primary-700);margin:4px 0;" id="successTrackingNumber">REG-2026-000000</div>
+                                        <div style="font-size:0.8rem;color:var(--slate-600);">Total Assessment: <strong id="successAmountDue">₱0.00</strong></div>
+                                    </div>
+
+                                    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+                                        <button type="button" class="btn btn-secondary" onclick="StudentApp.copyTrackingNumber()">Copy Tracking Number</button>
+                                        <button type="button" class="btn btn-primary" onclick="navigation.switchView('requests')">View My Requests &rarr;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: DOCUMENT CATALOG BROWSER -->
+                <div class="view-pane" id="view_catalog" style="display:none;">
+                    <div class="card-header" style="background:#FFF;padding:1rem 1.5rem;border-radius:var(--radius-md);margin-bottom:1.5rem;">
+                        <h3 class="card-title">Official Document Catalog & Fees</h3>
+                        <p style="font-size:0.85rem;color:var(--slate-600);margin-top:2px;">Select any document below to begin your official credential request.</p>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:1.25rem;" id="catalogGrid"></div>
+                </div>
+
+                <!-- VIEW 4: MY REQUESTS LIST -->
+                <div class="view-pane" id="view_requests" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">My Document Requests History</h3>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="StudentApp.openRequestPopup()">+ New Request</button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tracking #</th>
+                                        <th>Document</th>
+                                        <th>Amount</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                        <th>Overdue</th>
+                                        <th class="actions-cell">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myRequestsHistoryTbody"></tbody>
+                            </table>
+                        </div>
+                        <div id="historyPagination" class="pagination-container"></div>
+                    </div>
+                </div>
+
+                <!-- VIEW 5: ABOUT / ORG CHART -->
+                <div class="view-pane" id="view_orgchart" style="display:none;">
+                    <!-- Header Card -->
+                    <div class="card" style="margin-bottom:1.5rem;">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Registrar's Office — Organizational Chart</h3>
+                                <p style="font-size:0.85rem;color:var(--slate-600);margin-top:2px;">
+                                    Office of the Registrar · College of Our Lady of Mercy (COLM)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Org Chart Canvas (rendered by OrgChartApp) -->
+                    <div class="card" style="overflow-x:auto;padding:0.5rem;">
+                        <div id="orgChartCanvas">
+                            <p style="text-align:center;color:var(--slate-400);padding:2rem;">Loading organizational chart…</p>
+                        </div>
+                    </div>
+
+                    <!-- Department Legend -->
+                    <div class="card" style="margin-top:1.25rem;">
+                        <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--slate-500);margin-bottom:0.65rem;">Department Abbreviations</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:0.5rem 1.5rem;font-size:0.8rem;color:var(--slate-600);">
+                            <span><strong>HIM</strong> — Hospitality and Institutional Management</span>
+                            <span><strong>TED</strong> — Teacher Education Department</span>
+                            <span><strong>CSD</strong> — Computer Studies Department</span>
+                            <span><strong>AMD</strong> — Accountancy and Management Department</span>
+                            <span><strong>ASD</strong> — Allied Science Department</span>
+                            <span><strong>CJED</strong> — Criminal Justice Education Department</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="system-footer">
+                <strong>COLM Registrar Document Request &amp; Tracking System</strong>
+                <span>&copy; 2026 COLM. Authorized access only.</span>
+            </footer>
+        </main>
+    </div>
+
+    <!-- MODAL: REQUEST DETAILS & TIMELINE -->
+    <div class="modal-backdrop" id="requestDetailModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <div>
+                    <span style="font-size:0.75rem;color:var(--slate-500);font-weight:700;">REQUEST DETAILS</span>
+                    <h3 class="modal-title" id="mdlTracking">REG-2026-000000</h3>
+                </div>
+                <button type="button" class="btn-close-modal" aria-label="Close" onclick="document.getElementById('requestDetailModal').classList.remove('show')">Close</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border-color);">
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Current Status</div>
+                        <div id="mdlStatus" style="margin-top:2px;"></div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Target Completion</div>
+                        <div style="font-weight:700;color:#059669;" id="mdlTargetDate">—</div>
+                    </div>
+                </div>
+
+                <!-- Key Info Grid -->
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:1rem;background:var(--slate-50);padding:1rem;border-radius:var(--radius-md);margin-bottom:1.25rem;">
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Document</div>
+                        <div style="font-weight:700;" id="mdlDocName">—</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Copies & Method</div>
+                        <div style="font-weight:600;"><span id="mdlCopies">1</span> copy • <span id="mdlReleaseMethod">Personal</span></div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Amount Due / Paid</div>
+                        <div style="font-weight:700;color:var(--primary-700);"><span id="mdlAmountDue">₱0.00</span> / <span id="mdlAmountPaid" style="color:#059669;">₱0.00</span></div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Payment Status</div>
+                        <div style="font-weight:600;" id="mdlPaymentStatus">Unpaid</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Purpose</div>
+                        <div style="font-weight:600;" id="mdlPurpose">—</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.75rem;color:var(--slate-500);">Submitted Date</div>
+                        <div style="font-weight:600;" id="mdlSubmittedAt">—</div>
+                    </div>
+                </div>
+
+                <!-- Attached Requirement Files -->
+                <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;color:var(--slate-800);">Uploaded Requirements</h4>
+                <div id="mdlRequirements" style="margin-bottom:1.5rem;"></div>
+
+                <!-- Payment Area -->
+                <div id="mdlPaymentActionArea"></div>
+
+                <!-- Lifecycle Status Timeline -->
+                <h4 style="font-size:0.95rem;font-weight:700;margin:1.5rem 0 0.5rem;color:var(--slate-800);">Status History Timeline</h4>
+                <div class="timeline" id="mdlTimeline"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('requestDetailModal').classList.remove('show')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/utils.js?v=all-dashboard-navigation-20260904"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/orgchart.js"></script>
+    <script src="js/student.js?v=request-popup-back-fix-20260904"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            StudentApp.init();
+            OrgChartApp.init(true); // read-only for students
+        });
+    </script>
+</body>
+</html>

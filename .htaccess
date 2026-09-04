@@ -1,0 +1,26 @@
+# COLM Registrar Document Request and Tracking System
+# Apache URL Rewriting and Security Rules
+
+Options -Indexes
+RewriteEngine On
+
+# Route /api/v1/* requests directly to backend entrypoint
+RewriteRule ^api/v1/(.*)$ backend/public/index.php [QSA,L]
+
+# Route /track to public tracking in frontend
+RewriteRule ^track$ frontend/index.html [L]
+
+# Serve role pages and their relative frontend assets at the project root.
+RewriteRule ^(login|student|personnel|registrar|admin)\.html$ frontend/$1.html [END]
+RewriteRule ^(js|css)/(.*)$ frontend/$1/$2 [END]
+
+# Keep the login URL at the project root while serving the existing frontend page
+RewriteRule ^login\.html$ frontend/login.html [END]
+
+# Route root requests to the login page
+DirectoryIndex index.php frontend/index.html
+
+# Prevent direct access to private storage and config files
+RewriteRule ^backend/storage/private/(.*)$ - [F,L]
+RewriteRule ^\.env - [F,L]
+RewriteRule ^\.git - [F,L]

@@ -1,0 +1,312 @@
+/* ==============================================================================
+   COLM REGISTRAR DOCUMENT REQUEST AND TRACKING SYSTEM
+   Form Styles & Wizard Component
+   ============================================================================== */
+
+.form-group {
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--slate-700);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-label .required-star {
+    color: var(--primary-700);
+    margin-left: 2px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem;
+    color: var(--slate-900);
+    background-color: #FFFFFF;
+    border: 1px solid var(--slate-300);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: var(--primary-700);
+    box-shadow: 0 0 0 3px rgba(2, 78, 40, 0.12);
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: var(--slate-100);
+    color: var(--slate-500);
+    cursor: not-allowed;
+}
+
+textarea.form-control {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.form-hint {
+    font-size: 0.75rem;
+    color: var(--slate-500);
+    margin-top: 0.35rem;
+}
+
+.form-error-msg {
+    font-size: 0.75rem;
+    color: var(--primary-700);
+    font-weight: 600;
+    margin-top: 0.35rem;
+    display: none;
+}
+
+.form-group.has-error .form-control {
+    border-color: var(--primary-700);
+    background-color: var(--primary-50);
+}
+
+.form-group.has-error .form-error-msg {
+    display: block;
+}
+
+/* Search Bar with Input Group */
+.search-box-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+}
+
+.search-box-wrapper svg {
+    position: absolute;
+    left: 12px;
+    width: 18px;
+    height: 18px;
+    color: var(--slate-400);
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.6rem 0.85rem 0.6rem 2.4rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--slate-300);
+    border-radius: var(--radius-md);
+    background-color: var(--surface);
+    transition: var(--transition);
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--primary-700);
+    box-shadow: 0 0 0 3px rgba(2, 78, 40, 0.1);
+}
+
+/* Filter Toolbar */
+.filter-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
+}
+
+.filter-group-items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.filter-select {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    border: 1px solid var(--slate-300);
+    border-radius: var(--radius-sm);
+    background-color: #FFFFFF;
+    color: var(--slate-700);
+    outline: none;
+}
+
+.filter-select:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(8, 124, 66, 0.1);
+}
+
+/* File Upload Dropzone */
+.file-upload-dropzone {
+    border: 2px dashed var(--slate-300);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: center;
+    background-color: var(--slate-50);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.file-upload-dropzone:hover, .file-upload-dropzone.dragover {
+    border-color: var(--primary-700);
+    background-color: var(--primary-50);
+}
+
+.file-upload-dropzone input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.dropzone-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--primary-700);
+    margin: 0 auto 0.5rem;
+}
+
+.dropzone-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--slate-800);
+}
+
+.dropzone-subtext {
+    font-size: 0.75rem;
+    color: var(--slate-500);
+}
+
+.selected-file-preview {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: #FFFFFF;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-800);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ==============================================================================
+   MULTI-STEP WIZARD (Student Request Form)
+   ============================================================================== */
+.wizard-steps-track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.wizard-steps-track::before {
+    content: "";
+    position: absolute;
+    left: 2rem;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    background-color: var(--slate-200);
+    z-index: 1;
+}
+
+.wizard-step {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.wizard-step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background-color: #FFFFFF;
+    border: 2px solid var(--slate-300);
+    color: var(--slate-500);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.wizard-step-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--slate-500);
+    text-align: center;
+}
+
+.wizard-step.active .wizard-step-circle {
+    background-color: var(--primary-700);
+    border-color: var(--primary-700);
+    color: #FFFFFF;
+    box-shadow: 0 0 0 4px var(--primary-100);
+}
+
+.wizard-step.active .wizard-step-label {
+    color: var(--primary-700);
+    font-weight: 700;
+}
+
+.wizard-step.completed .wizard-step-circle {
+    background-color: #10B981;
+    border-color: #10B981;
+    color: #FFFFFF;
+}
+
+.wizard-step-pane {
+    display: none;
+}
+
+.wizard-step-pane.active {
+    display: block;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.wizard-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}

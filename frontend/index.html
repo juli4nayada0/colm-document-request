@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLM Registrar Portal</title>
+    <script>
+        const projectRoot = window.location.pathname.includes('/frontend/')
+            ? window.location.pathname.split('/frontend/')[0]
+            : window.location.pathname.replace(/\/[^/]*$/, '');
+        window.location.replace(`${window.location.origin}${projectRoot}/login.html`);
+    </script>
+    <link rel="stylesheet" href="css/reset.css?v=green20260903">
+    <link rel="stylesheet" href="css/main.css?v=green20260903">
+    <link rel="stylesheet" href="css/forms.css?v=green20260903">
+    <link rel="stylesheet" href="css/tables.css?v=green20260903">
+    <link rel="stylesheet" href="css/modals.css?v=green20260903">
+    <link rel="stylesheet" href="css/notifications.css?v=green20260903">
+    <link rel="stylesheet" href="css/responsive.css?v=green20260903">
+    <link rel="stylesheet" href="css/ui-refresh.css?v=20260904">
+    <style>
+        body {
+            background: #F3F8F5;
+        }
+        .landing-header {
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .landing-logos {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .landing-logos img {
+            width: auto;
+            height: 48px;
+            object-fit: contain;
+        }
+        .landing-logos img + img {
+            padding-left: 0.8rem;
+            border-left: 1px solid var(--border-color);
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-700) 100%);
+            color: #FFFFFF;
+            padding: 2.5rem 1rem 3.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-banner::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gold-500);
+        }
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--gold-400);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .hero-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .landing-login-card {
+            background: #FFFFFF;
+            color: var(--slate-900);
+            max-width: 420px;
+            margin: 1.5rem auto 0;
+            padding: 1.75rem;
+            text-align: left;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+        }
+        .landing-login-card h2 {
+            color: var(--primary-800);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+        .landing-login-card .form-group {
+            margin-bottom: 1rem;
+        }
+        .landing-login-card .form-label {
+            color: var(--slate-700);
+        }
+        .landing-login-card .form-control {
+            background: #FFFFFF;
+        }
+        .landing-login-card .login-footer {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--slate-500);
+            font-size: 0.8rem;
+        }
+        body > .tracking-card, body > .features-grid, body > footer {
+            display: none;
+        }
+        @media (max-width: 480px) {
+            .landing-header {
+                padding: 0.8rem 1rem;
+            }
+            .landing-logos img {
+                height: 40px;
+            }
+            .hero-title {
+                font-size: 1.7rem;
+            }
+            .landing-login-card {
+                padding: 1.25rem;
+            }
+        }
+        .tracking-card {
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-xl);
+            margin: -2.5rem auto 3rem;
+            max-width: 720px;
+            position: relative;
+            z-index: 10;
+            border: 1px solid var(--border-color);
+        }
+        .tracking-search-form {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto 4rem;
+            padding: 0 1.5rem;
+        }
+        .feature-card {
+            background: #FFFFFF;
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-full);
+            background: var(--primary-50);
+            color: var(--primary-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header class="landing-header">
+        <div class="landing-logos">
+            <img src="colmlogo.jpg" alt="COLM logo">
+            <img src="colmregistrarlogo.jpg" alt="COLM Registrar logo">
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-banner">
+        <div class="hero-container">
+            <h1 class="hero-title">COLM Registrar Portal</h1>
+            <p class="hero-subtitle">Office of the College Registrar</p>
+            <div class="landing-login-card">
+                <h2>Sign in to your account</h2>
+                <form id="landingLoginForm" onsubmit="handleLandingLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="landingUsername">Username / Student Number</label>
+                        <input type="text" id="landingUsername" class="form-control" placeholder="Enter your username" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="landingPassword">Password</label>
+                        <input type="password" id="landingPassword" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="landingLoginButton" style="width:100%;padding:0.75rem;">Sign In</button>
+                </form>
+                <p class="login-footer">For students, personnel, registrar, and administrator accounts</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Public Tracking Form Card -->
+    <div class="tracking-card" id="track">
+        <h3 style="font-size:1.2rem;font-weight:700;color:var(--slate-900);text-align:center;">Quick Request Tracking</h3>
+        <p style="font-size:0.875rem;color:var(--slate-600);text-align:center;margin-top:0.25rem;">
+            Enter your official tracking number (e.g. <code>REG-2026-000125</code>) to view live status.
+        </p>
+
+        <form id="publicTrackForm" onsubmit="handlePublicTrack(event)">
+            <div class="tracking-search-form">
+                <input type="text" id="publicTrackingInput" class="form-control" placeholder="Enter Tracking Number (e.g. REG-2026-000125)" required style="text-transform:uppercase;">
+                <button type="submit" class="btn btn-primary" id="btnTrack">
+                    Track Now
+                </button>
+            </div>
+        </form>
+
+        <!-- Tracking Results Container -->
+        <div id="trackingResultArea" style="margin-top:1.5rem;display:none;"></div>
+    </div>
+
+    <!-- Features Overview -->
+    <section class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon"><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h7l3 3v13a2 2 0 01-2 2z"/></svg></div>
+            <h4 style="font-size:1.05rem;font-weight:700;color:var(--slate-800);margin-bottom:0.5rem;">5-Step Online Request</h4>
+            <p style="font-size:0.85rem;color:var(--slate-600);line-height:1.5;">
+                Browse the 15 active registrar document types, select your purpose, specify number of copies, and upload required credentials smoothly.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon"><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" stroke-width="2" d="m20 20-4-4"/></svg></div>
+            <h4 style="font-size:1.05rem;font-weight:700;color:var(--slate-800);margin-bottom:0.5rem;">End-to-End Tracking</h4>
+            <p style="font-size:0.85rem;color:var(--slate-600);line-height:1.5;">
+                Receive transparent real-time status updates across verification, payment assessment, processing queue, and claiming readiness.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon"><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 12 2 2 4-4"/></svg></div>
+            <h4 style="font-size:1.05rem;font-weight:700;color:var(--slate-800);margin-bottom:0.5rem;">Secure & Audited</h4>
+            <p style="font-size:0.85rem;color:var(--slate-600);line-height:1.5;">
+                Protected by strict institutional role-based access control, private file storage, and comprehensive append-only audit logging.
+            </p>
+        </div>
+    </section>
+
+    <!-- Institutional Footer -->
+    <footer style="background:var(--slate-900);color:#FFFFFF;padding:3rem 2rem 1.5rem;margin-top:auto;">
+        <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:2rem;">
+            <div>
+                <h3 style="font-size:1.1rem;font-weight:700;color:var(--gold-400);margin-bottom:0.5rem;">COLM Registrar Office</h3>
+                <p style="font-size:0.85rem;color:var(--slate-400);line-height:1.5;max-width:360px;">
+                    College of Our Lady of Mercy of Pulilan Foundation, Inc.<br>
+                    Longos, Pulilan, Bulacan, Philippines<br>
+                    Email: registrar@colm.edu.ph
+                </p>
+            </div>
+            <div>
+                <h4 style="font-size:0.9rem;font-weight:700;margin-bottom:0.75rem;">Fast Access</h4>
+                <ul style="font-size:0.85rem;color:var(--slate-400);display:flex;flex-direction:column;gap:0.4rem;">
+                    <li><a href="login.html" style="color:var(--slate-300);hover:color:#FFF;">Student Portal</a></li>
+                    <li><a href="login.html" style="color:var(--slate-300);hover:color:#FFF;">Registrar Staff Login</a></li>
+                    <li><a href="#track" style="color:var(--slate-300);hover:color:#FFF;">Track Request</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align:center;font-size:0.75rem;color:var(--slate-500);margin-top:1.5rem;">
+            &copy; 2026 College of Our Lady of Mercy of Pulilan Foundation, Inc. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        async function handleLandingLogin(e) {
+            e.preventDefault();
+            const button = document.getElementById('landingLoginButton');
+            const username = document.getElementById('landingUsername').value.trim();
+            const password = document.getElementById('landingPassword').value;
+
+            button.disabled = true;
+            button.textContent = 'Signing in...';
+
+            try {
+                await auth.login(username, password);
+            } catch (err) {
+                button.disabled = false;
+                button.textContent = 'Sign In';
+            }
+        }
+
+        async function handlePublicTrack(e) {
+            e.preventDefault();
+            const input = document.getElementById('publicTrackingInput');
+            const trackingNum = input.value.trim().toUpperCase();
+            const btn = document.getElementById('btnTrack');
+            const area = document.getElementById('trackingResultArea');
+
+            btn.disabled = true;
+            btn.textContent = 'Searching...';
+
+            try {
+                const res = await api.get(`/requests/track/${encodeURIComponent(trackingNum)}`);
+                const r = res.data;
+
+                area.style.display = 'block';
+                area.innerHTML = `
+                    <div style="border-top:1px solid var(--border-color);padding-top:1.25rem;">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+                            <div>
+                                <span style="font-size:0.75rem;color:var(--slate-500);text-transform:uppercase;font-weight:700;">Tracking Number</span>
+                                <h4 style="font-size:1.2rem;font-weight:800;color:var(--primary-700);">${r.tracking_number}</h4>
+                            </div>
+                            <div>${utils.getStatusBadge(r.current_status)}</div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1rem;margin-bottom:1.5rem;background:var(--slate-50);padding:1rem;border-radius:var(--radius-md);">
+                            <div>
+                                <div style="font-size:0.75rem;color:var(--slate-500);">Document Requested</div>
+                                <div style="font-weight:700;font-size:0.9rem;">${utils.escapeHtml(r.document_name)}</div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.75rem;color:var(--slate-500);">Copies & Method</div>
+                                <div style="font-weight:600;font-size:0.9rem;">${r.copies} copy(ies) • ${r.release_method}</div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.75rem;color:var(--slate-500);">Date Submitted</div>
+                                <div style="font-weight:600;font-size:0.9rem;">${utils.formatDate(r.submitted_at)}</div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.75rem;color:var(--slate-500);">Target Completion</div>
+                                <div style="font-weight:700;font-size:0.9rem;color:#059669;">${utils.formatDate(r.target_completion_date, false)}</div>
+                            </div>
+                        </div>
+
+                        <h5 style="font-size:0.9rem;font-weight:700;margin-bottom:0.75rem;color:var(--slate-800);">Lifecycle Status Timeline</h5>
+                        <div class="timeline">
+                            ${r.timeline.map((t, idx) => `
+                                <div class="timeline-item ${idx === r.timeline.length - 1 ? 'active' : 'completed'}">
+                                    <div class="timeline-point"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-title">${utils.escapeHtml(t.status)}</span>
+                                            <span class="timeline-date">${utils.formatDate(t.date)}</span>
+                                        </div>
+                                        ${t.remarks ? `<div class="timeline-remarks">${utils.escapeHtml(t.remarks)}</div>` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                area.style.display = 'block';
+                area.innerHTML = `
+                    <div style="padding:1.5rem;text-align:center;background:#EFFAF2;border-radius:var(--radius-md);color:#024E28;border:1px solid #D9F2E3;">
+                        <strong>Tracking Number Not Found</strong>
+                        <p style="font-size:0.85rem;margin-top:0.25rem;">Please verify the tracking number format (e.g. REG-2026-000125) and try again.</p>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Track Now';
+            }
+        }
+    </script>
+</body>
+</html>

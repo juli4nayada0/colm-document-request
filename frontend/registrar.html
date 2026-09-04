@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Management Portal - COLM</title>
+    <link rel="stylesheet" href="css/reset.css?v=green20260903">
+    <link rel="stylesheet" href="css/main.css?v=filters20260903">
+    <link rel="stylesheet" href="css/forms.css?v=green20260903">
+    <link rel="stylesheet" href="css/tables.css?v=green20260903">
+    <link rel="stylesheet" href="css/modals.css?v=green20260903">
+    <link rel="stylesheet" href="css/notifications.css?v=green20260903">
+    <link rel="stylesheet" href="css/responsive.css?v=green20260903">
+    <link rel="stylesheet" href="css/ui-refresh.css?v=20260904">
+    <link rel="stylesheet" href="css/orgchart.css?v=green20260903">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="appSidebar">
+            <div class="sidebar-header">
+                <div class="institution-logo">
+                    <img src="colmlogo.jpg" alt="COLM logo">
+                </div>
+                <div class="sidebar-title">
+                    <h2>REGISTRAR PORTAL</h2>
+                    <p>OIC / Chief Registrar</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Overview</div>
+                <a href="#dashboard" class="nav-item active" data-view="dashboard">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    <span>Overview & KPIs</span>
+                </a>
+                <a href="#requests" class="nav-item" data-view="requests">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    <span>All Requests</span>
+                </a>
+
+                <div class="nav-section-title">Catalog & Students</div>
+                <a href="#catalog" class="nav-item" data-view="catalog">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    <span>Document Catalog</span>
+                </a>
+                <a href="#students" class="nav-item" data-view="students">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <span>Students Directory</span>
+                </a>
+                <a href="#import" class="nav-item" data-view="import">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    <span>CSV Bulk Import</span>
+                </a>
+
+                <div class="nav-section-title">Reports & Governance</div>
+                <a href="#reports" class="nav-item" data-view="reports">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    <span>Official Reports</span>
+                </a>
+                <a href="#audit" class="nav-item" data-view="audit">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    <span>Audit Logs</span>
+                </a>
+                <a href="#orgchart" class="nav-item" data-view="orgchart">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>Org Chart</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-quick-profile">
+                    <div class="user-meta">
+                        <span class="user-meta-name" id="sidebarUserName">Registrar</span>
+                        <span class="user-meta-role" id="sidebarUserRole">Registrar</span>
+                    </div>
+                    <button type="button" class="btn-logout" onclick="auth.logout()" title="Logout">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button type="button" class="btn-toggle-sidebar" id="btnToggleSidebar">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                    <div class="page-title-wrap">
+                        <h1>Registrar Master Management</h1>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Notification Bell Dropdown -->
+                    <div class="notif-dropdown-wrapper">
+                        <button type="button" class="btn-notif-bell" id="notifBellBtn">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                            <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
+                        </button>
+                        <div class="notif-dropdown-menu" id="notifDropdownMenu">
+                            <div class="notif-header">
+                                <h4>Notifications</h4>
+                                <button type="button" id="markAllReadBtn">Mark all as read</button>
+                            </div>
+                            <div class="notif-list" id="notifList"></div>
+                        </div>
+                    </div>
+
+                    <!-- User Pill -->
+                    <div class="user-header-pill">
+                        <div class="user-avatar" id="headerUserAvatar">R</div>
+                        <div class="user-info-text">
+                            <span class="user-info-name" id="headerUserName">Chief Registrar</span>
+                            <span class="user-info-role" id="headerUserRole">Registrar</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="app-content">
+
+                <!-- 1. DASHBOARD OVERVIEW -->
+                <div class="view-pane" id="view_dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="" data-filter-scope="all">
+                            <div class="stat-icon"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h7l3 3v13a2 2 0 01-2 2z"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statTotalRequests">0</span>
+                                <span class="stat-label">Total Requests</span>
+                            </div>
+                        </div>
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="" data-filter-scope="active">
+                            <div class="stat-icon" style="background:#FEF3C7;color:#D97706;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" stroke-width="2" d="M12 8v4l2 2"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statActivePending">0</span>
+                                <span class="stat-label">Active Workload</span>
+                            </div>
+                        </div>
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="" data-filter-scope="overdue">
+                            <div class="stat-icon" style="background:#EFFAF2;color:#024E28;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M5 20h14a2 2 0 001.73-3L13.73 4a2 2 0 00-3.46 0L3.27 17A2 2 0 005 20z"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statOverdueCount">0</span>
+                                <span class="stat-label">Overdue Requests</span>
+                            </div>
+                        </div>
+                        <div class="stat-card is-filterable" data-filter-target="reqStatusFilter" data-filter-value="RELEASED" data-filter-scope="released">
+                            <div class="stat-icon" style="background:#ECFDF5;color:#059669;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statTotalReleased">0</span>
+                                <span class="stat-label">Total Released</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#EFF6FF;color:#2563EB;"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-width="2" d="M3 10h18"/></svg></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statTotalCollected">₱0.00</span>
+                                <span class="stat-label">Fees Assessed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+                        <button type="button" class="btn btn-primary" onclick="navigation.switchView('requests')">Manage All Requests &rarr;</button>
+                        <button type="button" class="btn btn-secondary" onclick="navigation.switchView('import')">Upload CSV Student Accounts &rarr;</button>
+                        <button type="button" class="btn btn-secondary" onclick="navigation.switchView('reports')">View Institutional Reports &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- 2. ALL REQUESTS MANAGEMENT -->
+                <div class="view-pane" id="view_requests" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">All Document Requests</h3>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="RegistrarApp.loadAllRequests(1)">Refresh</button>
+                        </div>
+
+                        <!-- Filter Toolbar -->
+                        <div class="filter-toolbar">
+                            <div class="search-box-wrapper">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                <input type="text" class="search-input" id="reqSearchInput" placeholder="Search tracking #, student name, student #...">
+                            </div>
+
+                            <div class="filter-group-items">
+                                <select class="filter-select" id="reqStatusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="REQUEST SUBMITTED">Submitted</option>
+                                    <option value="FOR VERIFICATION">For Verification</option>
+                                    <option value="PENDING PAYMENT">Pending Payment</option>
+                                    <option value="PAID">PAID</option>
+                                    <option value="FOR PROCESSING">For Processing</option>
+                                    <option value="PROCESSING">Processing</option>
+                                    <option value="FOR REVIEW/APPROVAL">For Review</option>
+                                    <option value="READY FOR RELEASE">Ready for Release</option>
+                                    <option value="RELEASED">Released</option>
+                                    <option value="COMPLETED">Completed</option>
+                                    <option value="ON HOLD">On Hold</option>
+                                    <option value="INCOMPLETE">Incomplete</option>
+                                    <option value="REJECTED/CANCELLED">Cancelled</option>
+                                </select>
+
+                                <select class="filter-select" id="reqDocFilter">
+                                    <option value="">All Document Types</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Requests Table -->
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tracking #</th>
+                                        <th>Student</th>
+                                        <th>Document</th>
+                                        <th>Fee</th>
+                                        <th>Status</th>
+                                        <th>Payment</th>
+                                        <th>Personnel</th>
+                                        <th>Overdue</th>
+                                        <th class="actions-cell">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allRequestsTbody"></tbody>
+                            </table>
+                        </div>
+
+                        <div id="reqPagination" class="pagination-container"></div>
+                    </div>
+                </div>
+
+                <!-- 3. DOCUMENT CATALOG MANAGEMENT -->
+                <div class="view-pane" id="view_catalog" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Document Catalog & Processing Policy</h3>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="RegistrarApp.openCreateDocModal()">+ Add Document Type</button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Document Name</th>
+                                        <th>Fee</th>
+                                        <th>Processing Days</th>
+                                        <th>Digital Allowed</th>
+                                        <th>Status</th>
+                                        <th class="actions-cell">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="catalogTbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. STUDENTS DIRECTORY -->
+                <div class="view-pane" id="view_students" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Student Records & Enrollment Profiles</h3>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="navigation.switchView('import')">Bulk CSV Import</button>
+                        </div>
+
+                        <div class="filter-toolbar">
+                            <div class="search-box-wrapper">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                <input type="text" class="search-input" id="studSearchInput" placeholder="Search student number, name, email...">
+                            </div>
+
+                            <div class="filter-group-items">
+                                <select class="filter-select" id="studProgramFilter">
+                                    <option value="">All Programs</option>
+                                    <option value="Bachelor of Science in Information Technology">BS Information Technology</option>
+                                    <option value="Bachelor of Science in Business Administration">BS Business Administration</option>
+                                    <option value="Bachelor of Elementary Education">Bachelor of Elementary Education</option>
+                                    <option value="Bachelor of Secondary Education">Bachelor of Secondary Education</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student Number</th>
+                                        <th>Full Name</th>
+                                        <th>Program / Year</th>
+                                        <th>Email</th>
+                                        <th>Contact #</th>
+                                        <th>Status</th>
+                                        <th class="actions-cell">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTbody"></tbody>
+                            </table>
+                        </div>
+
+                        <div id="studPagination" class="pagination-container"></div>
+                    </div>
+                </div>
+
+                <!-- 5. CSV BULK IMPORT -->
+                <div class="view-pane" id="view_import" style="display:none;">
+                    <div class="card" style="max-width:900px;margin:0 auto;">
+                        <div class="card-header">
+                            <h3 class="card-title">Bulk Student Account Creation (CSV)</h3>
+                            <a href="data:text/csv;charset=utf-8,student_number,last_name,first_name,middle_name,sex,dob,program,major,year_level,academic_year,semester,email,contact_number,address,enrollment_status,date_enrolled%0A2026-00010,SANTOS,MARIA,CRUZ,Female,2005-04-12,BS Information Technology,General,1st Year,2026-2027,First Semester,maria.santos@student.com,0917-111-2222,Pulilan Bulacan,Officially Enrolled,2026-06-01" download="colm_student_import_template.csv" class="btn btn-secondary btn-sm">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg> Download Sample CSV Template
+                            </a>
+                        </div>
+
+                        <p style="font-size:0.875rem;color:var(--slate-600);margin-bottom:1.5rem;line-height:1.5;">
+                            Upload an official enrollment CSV file to automatically create student master records, linked user login accounts (default password: <code>Password123!</code>), and academic enrollment histories.
+                        </p>
+
+                        <!-- Upload Zone -->
+                        <div class="file-upload-dropzone" style="margin-bottom:1.5rem;">
+                            <input type="file" id="csvFileInput" accept=".csv">
+                            <div class="dropzone-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            </div>
+                            <div class="dropzone-text">Click or drag CSV file here to upload and validate</div>
+                            <div class="dropzone-subtext">Must contain student_number, last_name, first_name, sex, dob, program, email</div>
+                        </div>
+
+                        <!-- Preview Area -->
+                        <div id="csvPreviewSection" style="display:none;">
+                            <div class="stats-grid" style="margin-bottom:1.5rem;">
+                                <div class="stat-card">
+                                    <div class="stat-info">
+                                        <span class="stat-value" id="csvTotalRows">0</span>
+                                        <span class="stat-label">Total Rows</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-info">
+                                        <span class="stat-value" style="color:#059669;" id="csvValidRows">0</span>
+                                        <span class="stat-label">Valid Ready</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-info">
+                                        <span class="stat-value" style="color:#024E28;" id="csvInvalidRows">0</span>
+                                        <span class="stat-label">Invalid Rows</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-info">
+                                        <span class="stat-value" style="color:#D97706;" id="csvDuplicateRows">0</span>
+                                        <span class="stat-label">Duplicate Rows</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row Errors Table -->
+                            <div style="margin-bottom:1.5rem;">
+                                <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;color:var(--slate-800);">Validation Details & Exceptions</h4>
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Row #</th>
+                                                <th>Field</th>
+                                                <th>Error Description</th>
+                                                <th>Submitted Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="csvErrorsTbody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="RegistrarApp.downloadErrorReportCsv()"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg> Download Error Report</button>
+                                <div style="display:flex;gap:0.75rem;">
+                                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('csvPreviewSection').style.display='none'">Cancel</button>
+                                    <button type="button" class="btn btn-primary" id="btnConfirmImport" onclick="RegistrarApp.commitCsvImport()">Confirm & Import Valid Records</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. OFFICIAL REPORTS -->
+                <div class="view-pane" id="view_reports" style="display:none;">
+                    <div class="card" style="padding:1rem;margin-bottom:1.5rem;">
+                        <div style="display:flex;gap:0.5rem;overflow-x:auto;padding-bottom:4px;">
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn active" data-report="summary">Executive Summary</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="daily">Daily Requests</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="monthly">Monthly Report</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="document-types">By Document</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="programs">By Program</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="pending">Pending Queue</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="completed">Completed</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="released">Released Claiming</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="personnel">Personnel Workload</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="processing-time">Processing Times</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="overdue">Overdue Requests</button>
+                            <button type="button" class="btn btn-secondary btn-sm report-tab-btn" data-report="payments">Payment Collections</button>
+                        </div>
+                    </div>
+
+                    <div id="reportDisplayArea"></div>
+                </div>
+
+                <!-- 7. AUDIT LOGS -->
+                <div class="view-pane" id="view_audit" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Immutable Audit Trail</h3>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="RegistrarApp.loadAuditLogs(1)">Refresh Logs</button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Log ID</th>
+                                        <th>Action</th>
+                                        <th>Entity Affected</th>
+                                        <th>Performed By</th>
+                                        <th>IP Address</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditTbody"></tbody>
+                            </table>
+                        </div>
+
+                        <div id="auditPagination" class="pagination-container"></div>
+                    </div>
+                </div>
+
+                <!-- 8. ORG CHART MANAGEMENT -->
+                <div class="view-pane" id="view_orgchart" style="display:none;">
+
+                    <!-- Top toolbar -->
+                    <div class="card" style="margin-bottom:1.5rem;">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Organizational Chart Management</h3>
+                                <p style="font-size:0.85rem;color:var(--slate-600);margin-top:2px;">
+                                    Manage the registrar office org chart. Changes reflect on the student portal in real time.
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="ocAddBtn">+ Add Member</button>
+                        </div>
+                    </div>
+
+                    <!-- Visual chart preview -->
+                    <div class="card" style="margin-bottom:1.5rem;overflow-x:auto;padding:0.5rem;">
+                        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--slate-400);letter-spacing:.5px;padding:0.5rem 0.5rem 0;">Live Preview (what students see)</div>
+                        <div id="orgChartCanvas">
+                            <p style="text-align:center;color:var(--slate-400);padding:2rem;">Loading chart…</p>
+                        </div>
+                    </div>
+
+                    <!-- CRUD Table -->
+                    <div class="card" id="orgTableArea">
+                        <div class="card-header">
+                            <h3 class="card-title">All Members</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>Position / Title</th>
+                                        <th>Role Level</th>
+                                        <th>Status</th>
+                                        <th class="actions-cell">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orgTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <footer class="system-footer">
+                <strong>COLM Registrar Document Request &amp; Tracking System</strong>
+                <span>&copy; 2026 COLM. Authorized access only.</span>
+            </footer>
+        </main>
+    </div>
+
+    <!-- MODAL: ADD / EDIT ORG CHART MEMBER -->
+    <div class="modal-backdrop" id="ocModal">
+        <div class="modal-dialog" style="max-width:520px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ocModalTitle">Add Org Chart Member</h3>
+                <button type="button" class="btn-close-modal" id="ocModalClose" aria-label="Close">Close</button>
+            </div>
+            <form id="ocForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label" for="ocFullName">Full Name <span class="required-star">*</span></label>
+                        <input type="text" id="ocFullName" class="form-control" placeholder="e.g. Juan Dela Cruz, LPT" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="ocPosition">Position / Title <span class="required-star">*</span></label>
+                        <input type="text" id="ocPosition" class="form-control" placeholder="e.g. OIC-Registrar" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="ocDepartment">Department Assignment <span style="color:var(--slate-400);font-weight:400;">(optional)</span></label>
+                        <input type="text" id="ocDepartment" class="form-control" placeholder="e.g. HIM / TED / CSD">
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                        <div class="form-group">
+                            <label class="form-label" for="ocRoleLevel">Role Level <span class="required-star">*</span></label>
+                            <select id="ocRoleLevel" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="ocSortOrder">Sort Order</label>
+                            <input type="number" id="ocSortOrder" class="form-control" value="99" min="1" max="999">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:flex;align-items:center;gap:0.6rem;margin-top:0.25rem;">
+                        <input type="checkbox" id="ocIsActive" checked style="width:16px;height:16px;cursor:pointer;">
+                        <label for="ocIsActive" style="font-size:0.875rem;cursor:pointer;">Active (visible on org chart)</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="ocCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="ocSaveBtn">Add Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ASSIGN PERSONNEL -->
+    <div class="modal-backdrop" id="assignModal">
+        <div class="modal-dialog" style="max-width:440px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Assign Processing Staff</h3>
+                <button type="button" class="btn-close-modal" aria-label="Close" onclick="document.getElementById('assignModal').classList.remove('show')">Close</button>
+            </div>
+            <form id="assignForm" onsubmit="RegistrarApp.handleAssignSubmit(event)">
+                <input type="hidden" id="assignRequestId">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label" for="assignPersonnelSelect">Assigned Personnel</label>
+                        <select class="form-control" id="assignPersonnelSelect"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('assignModal').classList.remove('show')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Assignment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: CREATE / EDIT DOCUMENT -->
+    <div class="modal-backdrop" id="docModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <h3 class="modal-title" id="docModalTitle">Create Document Type</h3>
+                <button type="button" class="btn-close-modal" aria-label="Close" onclick="document.getElementById('docModal').classList.remove('show')">Close</button>
+            </div>
+            <form id="docForm" onsubmit="RegistrarApp.handleDocFormSubmit(event)">
+                <input type="hidden" id="docId">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="docCode">Document Code <span class="required-star">*</span></label>
+                            <input type="text" id="docCode" class="form-control" placeholder="e.g. DOC-TOR" required style="text-transform:uppercase;">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="docName">Document Name <span class="required-star">*</span></label>
+                            <input type="text" id="docName" class="form-control" placeholder="e.g. Transcript of Records" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="docFee">Fee Assessment (PHP) <span class="required-star">*</span></label>
+                            <input type="number" id="docFee" class="form-control" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="docDays">Estimated Processing Days <span class="required-star">*</span></label>
+                            <input type="number" id="docDays" class="form-control" min="1" max="60" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="docDigital">Digital Copy Allowed?</label>
+                            <select class="form-control" id="docDigital">
+                                <option value="0">No (Physical / Dry Seal Only)</option>
+                                <option value="1">Yes (Digital Certified Copy Allowed)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="docDesc">Description <span class="required-star">*</span></label>
+                        <textarea id="docDesc" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="docPurpose">Typical Purpose <span class="required-star">*</span></label>
+                        <input type="text" id="docPurpose" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="docBasicReqs">Basic Requirements Summary <span class="required-star">*</span></label>
+                        <input type="text" id="docBasicReqs" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('docModal').classList.remove('show')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Document</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: STUDENT PROFILE -->
+    <div class="modal-backdrop" id="studentProfileModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <h3 class="modal-title">Student Profile & Academic History</h3>
+                <button type="button" class="btn-close-modal" aria-label="Close" onclick="document.getElementById('studentProfileModal').classList.remove('show')">Close</button>
+            </div>
+            <div class="modal-body">
+                <div style="background:var(--slate-50);padding:1rem;border-radius:var(--radius-md);margin-bottom:1rem;border:1px solid var(--border-color);">
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:0.75rem;font-size:0.85rem;">
+                        <div><span style="color:var(--slate-500);">Student Number:</span> <strong id="spStudentNum">—</strong></div>
+                        <div><span style="color:var(--slate-500);">Full Name:</span> <strong id="spFullName">—</strong></div>
+                        <div><span style="color:var(--slate-500);">Date of Birth:</span> <span id="spDob">—</span></div>
+                        <div><span style="color:var(--slate-500);">Sex:</span> <span id="spSex">—</span></div>
+                        <div><span style="color:var(--slate-500);">Email:</span> <span id="spEmail">—</span></div>
+                        <div><span style="color:var(--slate-500);">Contact:</span> <span id="spContact">—</span></div>
+                        <div><span style="color:var(--slate-500);">Program:</span> <span id="spProgram">—</span></div>
+                        <div><span style="color:var(--slate-500);">Year Level:</span> <span id="spYear">—</span></div>
+                        <div style="grid-column: 1 / -1;"><span style="color:var(--slate-500);">Address:</span> <span id="spAddress">—</span></div>
+                    </div>
+                </div>
+
+                <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;color:var(--slate-800);">Historical Enrollment Records</h4>
+                <div id="spEnrollHistory"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('studentProfileModal').classList.remove('show')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/utils.js?v=filters20260903"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/orgchart.js"></script>
+    <script src="js/personnel.js"></script>
+    <script src="js/registrar.js?v=smooth-student-search-20260904"></script>
+    <script src="js/reports.js?v=filters20260903"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            RegistrarApp.init();
+            ReportsApp.init();
+            OrgChartApp.init(false); // full CRUD mode for registrar
+        });
+    </script>
+</body>
+</html>
