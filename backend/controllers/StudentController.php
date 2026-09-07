@@ -83,33 +83,6 @@ class StudentController {
     }
 
     /**
-     * PATCH /api/v1/students/deactivate-all
-     */
-    public function deactivateAll(): void {
-        RoleMiddleware::authorize($this->currentUser, ['Admin']);
-
-        $data = json_decode(file_get_contents('php://input'), true) ?? [];
-        $filters = [];
-        foreach (['program', 'year_level', 'education_level', 'section'] as $field) {
-            if (!empty($data[$field])) {
-                $filters[$field] = SecurityHelper::sanitizeString($data[$field]);
-            }
-        }
-
-        $count = $this->studentModel->deactivateAccounts($filters);
-        $this->auditService->log(
-            $this->currentUser['user_id'],
-            'STUDENT_ACCOUNTS_DEACTIVATED',
-            'users',
-            'bulk',
-            null,
-            ['filters' => $filters, 'affected_accounts' => $count]
-        );
-
-        ResponseHelper::success(['affected_accounts' => $count], "{$count} student account(s) deactivated.");
-    }
-
-    /**
      * GET /api/v1/students/me
      */
     public function me(): void {

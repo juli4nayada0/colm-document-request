@@ -102,8 +102,6 @@ elseif ($path === '/students/filter-options' && $requestMethod === 'GET') {
     (new StudentController())->filterOptions();
 } elseif ($path === '/students' && $requestMethod === 'GET') {
     (new StudentController())->index();
-} elseif ($path === '/students/deactivate-all' && in_array($requestMethod, ['PATCH', 'POST'], true)) {
-    (new StudentController())->deactivateAll();
 } elseif ($path === '/students' && $requestMethod === 'POST') {
     (new StudentController())->store();
 } elseif ($path === '/students/me' && $requestMethod === 'GET') {

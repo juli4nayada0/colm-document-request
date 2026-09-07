@@ -34,10 +34,6 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                     <span>User Accounts</span>
                 </a>
-                <a href="#student_accounts" class="nav-item" data-view="student_accounts">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 0114 0H5z"/></svg>
-                    <span>Student Accounts</span>
-                </a>
                 <a href="#audit" class="nav-item" data-view="audit">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     <span>Technical Audit Logs</span>
@@ -141,62 +137,7 @@
                     </div>
                 </div>
 
-                <!-- 2. STUDENT ACCOUNT MANAGEMENT -->
-                <div class="view-pane" id="view_student_accounts" style="display:none;">
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <h3 class="card-title">Student Account Management</h3>
-                                <p style="font-size:0.8rem;color:var(--slate-600);margin-top:0.25rem;">Deactivate active student login accounts matching the selected filters.</p>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="AdminApp.deactivateAllStudents()">Deactivate Matching Students</button>
-                        </div>
-
-                        <div class="filter-toolbar">
-                            <div class="filter-group-items">
-                                <select class="filter-select" id="adminStudentEducationFilter">
-                                    <option value="">All Programs</option>
-                                    <option value="Junior High School">Junior High</option>
-                                    <option value="Senior High School">Senior High</option>
-                                    <option value="College">College</option>
-                                </select>
-                                <select class="filter-select" id="adminStudentYearFilter">
-                                    <option value="">All College Years</option>
-                                    <option value="1st Year">1st Year</option>
-                                    <option value="2nd Year">2nd Year</option>
-                                    <option value="3rd Year">3rd Year</option>
-                                    <option value="4th Year">4th Year</option>
-                                </select>
-                                <select class="filter-select" id="adminStudentCourseFilter">
-                                    <option value="">All College Courses</option>
-                                    <option value="Bachelor of Science in Information Technology">BS Information Technology</option>
-                                    <option value="Bachelor of Science in Business Administration">BS Business Administration</option>
-                                    <option value="Bachelor of Elementary Education">Bachelor of Elementary Education</option>
-                                    <option value="Bachelor of Secondary Education">Bachelor of Secondary Education</option>
-                                </select>
-                                <select class="filter-select" id="adminStudentSectionFilter">
-                                    <option value="">All Sections</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Student Number</th>
-                                        <th>Full Name</th>
-                                        <th>Course / Year</th>
-                                        <th>Account Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="adminStudentsTbody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. TECHNICAL AUDIT LOGS -->
+                <!-- 2. TECHNICAL AUDIT LOGS -->
                 <div class="view-pane" id="view_audit" style="display:none;">
                     <div class="card">
                         <div class="card-header">

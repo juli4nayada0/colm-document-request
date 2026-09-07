@@ -183,35 +183,6 @@ class Student extends BaseModel {
         )));
     }
 
-    /**
-     * Deactivate student accounts matching directory filters.
-     */
-    public function deactivateAccounts(array $filters): int {
-        $conditions = ["u.role = 'Student'", 'u.is_active = 1', 's.user_id IS NOT NULL'];
-        $params = [];
-
-        foreach (['program', 'year_level', 'education_level', 'section'] as $field) {
-            if (!empty($filters[$field])) {
-                $conditions[] = "e.{$field} = :deactivate_{$field}";
-                $params["deactivate_{$field}"] = $filters[$field];
-            }
-        }
-
-        $sql = "UPDATE users u
-                INNER JOIN students s ON s.user_id = u.user_id
-                INNER JOIN (
-                    SELECT e1.* FROM enrollment_records e1
-                    INNER JOIN (
-                        SELECT student_id, MAX(enrollment_id) AS max_id
-                        FROM enrollment_records GROUP BY student_id
-                    ) e2 ON e1.enrollment_id = e2.max_id
-                ) e ON e.student_id = s.student_id
-                SET u.is_active = 0, u.updated_at = NOW()
-                WHERE " . implode(' AND ', $conditions);
-
-        $this->execute($sql, $params);
-        return $this->db->rowCount();
-    }
 
     /**
      * Create student record
