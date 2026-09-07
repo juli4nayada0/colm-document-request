@@ -20,12 +20,14 @@ const AdminApp = {
         const userSearch = document.getElementById('userSearchInput');
         const roleFilter = document.getElementById('userRoleFilter');
         const statusFilter = document.getElementById('userStatusFilter');
+        const studentEducationFilter = document.getElementById('adminStudentEducationFilter');
         const studentYearFilter = document.getElementById('adminStudentYearFilter');
         const studentCourseFilter = document.getElementById('adminStudentCourseFilter');
 
         if (userSearch) userSearch.addEventListener('input', utils.debounce(() => this.loadUsers(1), 350));
         if (roleFilter) roleFilter.addEventListener('change', () => this.loadUsers(1));
         if (statusFilter) statusFilter.addEventListener('change', () => this.loadUsers(1));
+        if (studentEducationFilter) studentEducationFilter.addEventListener('change', () => this.loadStudents());
         if (studentYearFilter) studentYearFilter.addEventListener('change', () => this.loadStudents());
         if (studentCourseFilter) studentCourseFilter.addEventListener('change', () => this.loadStudents());
     },
@@ -38,7 +40,8 @@ const AdminApp = {
         try {
             const year_level = document.getElementById('adminStudentYearFilter')?.value || '';
             const program = document.getElementById('adminStudentCourseFilter')?.value || '';
-            const res = await api.get('/students', { page: 1, limit: 100, program, year_level });
+            const education_level = document.getElementById('adminStudentEducationFilter')?.value || '';
+            const res = await api.get('/students', { page: 1, limit: 100, program, year_level, education_level });
             const records = res.data || [];
 
             if (records.length === 0) {
@@ -62,12 +65,13 @@ const AdminApp = {
     async deactivateAllStudents() {
         const year_level = document.getElementById('adminStudentYearFilter')?.value || '';
         const program = document.getElementById('adminStudentCourseFilter')?.value || '';
-        const scope = [year_level, program].filter(Boolean).join(' / ') || 'all active student accounts';
+        const education_level = document.getElementById('adminStudentEducationFilter')?.value || '';
+        const scope = [education_level, year_level, program].filter(Boolean).join(' / ') || 'all active student accounts';
 
         if (!window.confirm(`Deactivate ${scope}? This will disable matching student logins.`)) return;
 
         try {
-            const res = await api.patch('/students/deactivate-all', { year_level, program });
+            const res = await api.patch('/students/deactivate-all', { year_level, program, education_level });
             Toast.success(res.message || 'Student accounts deactivated.');
             await this.loadStudents();
         } catch (e) {
