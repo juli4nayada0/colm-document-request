@@ -64,4 +64,12 @@ class Notification extends BaseModel {
         $sql = "UPDATE notifications SET is_read = 1 WHERE user_id = :user_id AND is_read = 0";
         return $this->execute($sql, ['user_id' => $userId]);
     }
+
+    /**
+     * Delete a notification owned by a user
+     */
+    public function deleteForUser(int $notificationId, int $userId): bool {
+        $sql = "DELETE FROM notifications WHERE notification_id = :id AND user_id = :user_id";
+        return $this->execute($sql, ['id' => $notificationId, 'user_id' => $userId]);
+    }
 }

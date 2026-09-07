@@ -53,4 +53,13 @@ class NotificationController {
         $this->notificationService->markAllRead($userId);
         ResponseHelper::success(null, 'All notifications marked as read.');
     }
+
+    /**
+     * DELETE /api/v1/notifications/{id}
+     */
+    public function delete(int $id): void {
+        $userId = $this->currentUser['user_id'];
+        $this->notificationService->delete($id, $userId);
+        ResponseHelper::success(null, 'Notification deleted.');
+    }
 }

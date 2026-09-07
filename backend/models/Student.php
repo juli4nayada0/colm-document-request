@@ -14,7 +14,7 @@ class Student extends BaseModel {
      */
     public function findById(int $studentId): ?array {
         $sql = "SELECT s.*, 
-                       e.program, e.major, e.year_level, e.academic_year, e.semester, e.enrollment_status, e.date_enrolled,
+                       e.program, e.education_level, e.major, e.year_level, e.section, e.academic_year, e.semester, e.enrollment_status, e.date_enrolled,
                        a.graduation_status, a.record_reference, a.verification_status as academic_verification_status
                 FROM students s
                 LEFT JOIN (
@@ -35,7 +35,7 @@ class Student extends BaseModel {
      */
     public function findByUserId(int $userId): ?array {
         $sql = "SELECT s.*, 
-                       e.program, e.major, e.year_level, e.academic_year, e.semester, e.enrollment_status, e.date_enrolled,
+                       e.program, e.education_level, e.major, e.year_level, e.section, e.academic_year, e.semester, e.enrollment_status, e.date_enrolled,
                        a.graduation_status, a.record_reference, a.verification_status as academic_verification_status
                 FROM students s
                 LEFT JOIN (
@@ -62,7 +62,7 @@ class Student extends BaseModel {
     /**
      * Get paginated student directory with search and multi-filtering
      */
-    public function getList(int $page = 1, int $limit = 25, ?string $search = null, ?string $program = null, ?string $yearLevel = null, ?string $status = null): array {
+    public function getList(int $page = 1, int $limit = 25, ?string $search = null, ?string $program = null, ?string $yearLevel = null, ?string $status = null, ?string $educationLevel = null, ?string $section = null): array {
         $offset = ($page - 1) * $limit;
         $conditions = [];
         $params = [];
@@ -75,6 +75,16 @@ class Student extends BaseModel {
         if (!empty($yearLevel)) {
             $conditions[] = "e.year_level = :year_level";
             $params['year_level'] = $yearLevel;
+        }
+
+        if (!empty($educationLevel)) {
+            $conditions[] = "e.education_level = :education_level";
+            $params['education_level'] = $educationLevel;
+        }
+
+        if (!empty($section)) {
+            $conditions[] = "e.section = :section";
+            $params['section'] = $section;
         }
 
         if (!empty($status)) {
@@ -115,7 +125,7 @@ class Student extends BaseModel {
 
         $sql = "SELECT s.student_id, s.user_id, s.student_number, s.last_name, s.first_name, s.middle_name,
                        s.sex, s.dob, s.contact_number, s.email, s.address, s.created_at,
-                       e.program, e.major, e.year_level, e.academic_year, e.semester, e.enrollment_status,
+                       e.program, e.education_level, e.major, e.year_level, e.section, e.academic_year, e.semester, e.enrollment_status,
                        u.is_active as account_active, u.last_login_at
                 FROM students s
                 LEFT JOIN users u ON s.user_id = u.user_id
@@ -139,6 +149,36 @@ class Student extends BaseModel {
             'limit'   => $limit,
             'pages'   => ceil($total / max(1, $limit))
         ];
+    }
+
+    /**
+     * Deactivate student accounts matching directory filters.
+     */
+    public function deactivateAccounts(array $filters): int {
+        $conditions = ["u.role = 'Student'", 'u.is_active = 1', 's.user_id IS NOT NULL'];
+        $params = [];
+
+        foreach (['program', 'year_level', 'education_level', 'section'] as $field) {
+            if (!empty($filters[$field])) {
+                $conditions[] = "e.{$field} = :deactivate_{$field}";
+                $params["deactivate_{$field}"] = $filters[$field];
+            }
+        }
+
+        $sql = "UPDATE users u
+                INNER JOIN students s ON s.user_id = u.user_id
+                INNER JOIN (
+                    SELECT e1.* FROM enrollment_records e1
+                    INNER JOIN (
+                        SELECT student_id, MAX(enrollment_id) AS max_id
+                        FROM enrollment_records GROUP BY student_id
+                    ) e2 ON e1.enrollment_id = e2.max_id
+                ) e ON e.student_id = s.student_id
+                SET u.is_active = 0, u.updated_at = NOW()
+                WHERE " . implode(' AND ', $conditions);
+
+        $this->execute($sql, $params);
+        return $this->db->rowCount();
     }
 
     /**

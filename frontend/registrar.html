@@ -276,12 +276,53 @@
                             </div>
 
                             <div class="filter-group-items">
+                                <select class="filter-select" id="studEducationFilter">
+                                    <option value="">All Levels</option>
+                                    <option value="Junior High School">Junior High</option>
+                                    <option value="Senior High School">Senior High</option>
+                                    <option value="College">College</option>
+                                </select>
                                 <select class="filter-select" id="studProgramFilter">
                                     <option value="">All Programs</option>
+                                    <option value="Junior High School">Junior High School</option>
+                                    <option value="Senior High School">Senior High School</option>
+                                    <option value="STEM">Senior High - STEM</option>
+                                    <option value="ABM">Senior High - ABM</option>
+                                    <option value="HUMSS">Senior High - HUMSS</option>
+                                    <option value="GAS">Senior High - GAS</option>
                                     <option value="Bachelor of Science in Information Technology">BS Information Technology</option>
                                     <option value="Bachelor of Science in Business Administration">BS Business Administration</option>
                                     <option value="Bachelor of Elementary Education">Bachelor of Elementary Education</option>
                                     <option value="Bachelor of Secondary Education">Bachelor of Secondary Education</option>
+                                </select>
+                                <select class="filter-select" id="studGradeFilter">
+                                    <option value="">All Grade Levels</option>
+                                    <option value="Grade 7">Grade 7</option>
+                                    <option value="Grade 8">Grade 8</option>
+                                    <option value="Grade 9">Grade 9</option>
+                                    <option value="Grade 10">Grade 10</option>
+                                    <option value="Grade 11">Grade 11</option>
+                                    <option value="Grade 12">Grade 12</option>
+                                </select>
+                                <select class="filter-select" id="studYearFilter">
+                                    <option value="">All College Years</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                </select>
+                                <select class="filter-select" id="studCourseFilter">
+                                    <option value="">All College Courses</option>
+                                    <option value="Bachelor of Science in Information Technology">BS Information Technology</option>
+                                    <option value="Bachelor of Science in Business Administration">BS Business Administration</option>
+                                    <option value="Bachelor of Elementary Education">Bachelor of Elementary Education</option>
+                                    <option value="Bachelor of Secondary Education">Bachelor of Secondary Education</option>
+                                </select>
+                                <select class="filter-select" id="studSectionFilter">
+                                    <option value="">All Sections</option>
+                                    <option value="A">Section A</option>
+                                    <option value="B">Section B</option>
+                                    <option value="C">Section C</option>
                                 </select>
                             </div>
                         </div>
@@ -312,7 +353,7 @@
                     <div class="card" style="max-width:900px;margin:0 auto;">
                         <div class="card-header">
                             <h3 class="card-title">Bulk Student Account Creation (CSV)</h3>
-                            <a href="data:text/csv;charset=utf-8,student_number,last_name,first_name,middle_name,sex,dob,program,major,year_level,academic_year,semester,email,contact_number,address,enrollment_status,date_enrolled%0A2026-00010,SANTOS,MARIA,CRUZ,Female,2005-04-12,BS Information Technology,General,1st Year,2026-2027,First Semester,maria.santos@student.com,0917-111-2222,Pulilan Bulacan,Officially Enrolled,2026-06-01" download="colm_student_import_template.csv" class="btn btn-secondary btn-sm">
+                            <a href="data:text/csv;charset=utf-8,student_number,last_name,first_name,middle_name,sex,dob,program,education_level,major,year_level,section,academic_year,semester,email,contact_number,address,enrollment_status,date_enrolled%0A2026-00010,SANTOS,MARIA,CRUZ,Female,2005-04-12,Bachelor of Science in Information Technology,College,General,1st Year,A,2026-2027,First Semester,maria.santos@student.com,0917-111-2222,Pulilan Bulacan,Officially Enrolled,2026-06-01" download="colm_student_import_template.csv" class="btn btn-secondary btn-sm">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg> Download Sample CSV Template
                             </a>
                         </div>

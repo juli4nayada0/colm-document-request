@@ -180,6 +180,9 @@ const NotificationCenter = {
                 <div class="notif-title">${utils.escapeHtml(n.title)}</div>
                 <div class="notif-message">${utils.escapeHtml(n.message)}</div>
                 <div class="notif-time">${utils.formatDate(n.created_at)}</div>
+                <button type="button" class="btn-notif-delete" aria-label="Delete notification" title="Delete notification" onclick="event.stopPropagation(); NotificationCenter.deleteNotification(${n.notification_id})">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12m-10 0v10m8-10v10M9 7V4h6v3m-9 0h12"/></svg>
+                </button>
             </div>
         `).join('');
     },
@@ -193,6 +196,16 @@ const NotificationCenter = {
             }
         } catch (e) {
             console.error('Error marking notification read:', e);
+        }
+    },
+
+    async deleteNotification(notifId) {
+        try {
+            await api.delete(`/notifications/${notifId}`);
+            this.fetchNotifications();
+            Toast.success('Notification deleted.');
+        } catch (e) {
+            Toast.error('Failed to delete notification.');
         }
     }
 };

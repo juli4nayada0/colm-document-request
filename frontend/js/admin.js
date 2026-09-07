@@ -11,6 +11,7 @@ const AdminApp = {
         utils.setupFilterTriggers();
 
         await this.loadUsers();
+        await this.loadStudents();
         await this.loadSystemAudit();
         this.setupFilterEvents();
     },
@@ -19,10 +20,59 @@ const AdminApp = {
         const userSearch = document.getElementById('userSearchInput');
         const roleFilter = document.getElementById('userRoleFilter');
         const statusFilter = document.getElementById('userStatusFilter');
+        const studentYearFilter = document.getElementById('adminStudentYearFilter');
+        const studentCourseFilter = document.getElementById('adminStudentCourseFilter');
 
         if (userSearch) userSearch.addEventListener('input', utils.debounce(() => this.loadUsers(1), 350));
         if (roleFilter) roleFilter.addEventListener('change', () => this.loadUsers(1));
         if (statusFilter) statusFilter.addEventListener('change', () => this.loadUsers(1));
+        if (studentYearFilter) studentYearFilter.addEventListener('change', () => this.loadStudents());
+        if (studentCourseFilter) studentCourseFilter.addEventListener('change', () => this.loadStudents());
+    },
+
+    async loadStudents() {
+        const tbody = document.getElementById('adminStudentsTbody');
+        if (!tbody) return;
+
+        tbody.innerHTML = '<tr><td colspan="4" class="loading-overlay"><div class="spinner"></div><p>Loading students...</p></td></tr>';
+        try {
+            const year_level = document.getElementById('adminStudentYearFilter')?.value || '';
+            const program = document.getElementById('adminStudentCourseFilter')?.value || '';
+            const res = await api.get('/students', { page: 1, limit: 100, program, year_level });
+            const records = res.data || [];
+
+            if (records.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:2rem;color:var(--slate-500);">No students found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = records.map(s => `
+                <tr>
+                    <td><strong>${utils.escapeHtml(s.student_number)}</strong></td>
+                    <td>${utils.escapeHtml(s.last_name)}, ${utils.escapeHtml(s.first_name)} ${utils.escapeHtml(s.middle_name || '')}</td>
+                    <td>${utils.escapeHtml(s.program || '—')}<div class="secondary-cell-text">${utils.escapeHtml(s.year_level || '')}</div></td>
+                    <td><span class="badge ${parseInt(s.account_active) === 1 ? 'badge-active' : 'badge-inactive'}">${parseInt(s.account_active) === 1 ? 'Active' : 'Inactive'}</span></td>
+                </tr>
+            `).join('');
+        } catch (e) {
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="color:#024E28;">Failed to load students.</td></tr>';
+        }
+    },
+
+    async deactivateAllStudents() {
+        const year_level = document.getElementById('adminStudentYearFilter')?.value || '';
+        const program = document.getElementById('adminStudentCourseFilter')?.value || '';
+        const scope = [year_level, program].filter(Boolean).join(' / ') || 'all active student accounts';
+
+        if (!window.confirm(`Deactivate ${scope}? This will disable matching student logins.`)) return;
+
+        try {
+            const res = await api.patch('/students/deactivate-all', { year_level, program });
+            Toast.success(res.message || 'Student accounts deactivated.');
+            await this.loadStudents();
+        } catch (e) {
+            Toast.error(e.message || 'Failed to deactivate student accounts.');
+        }
     },
 
     async loadUsers(page = 1) {

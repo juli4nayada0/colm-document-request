@@ -75,6 +75,20 @@
     background-color: var(--slate-100);
 }
 
+.btn-notif-delete {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    padding: 0.3rem;
+    color: var(--slate-400);
+    border-radius: var(--radius-sm);
+}
+
+.btn-notif-delete:hover {
+    color: var(--primary-700);
+    background: var(--slate-100);
+}
+
 /* Toast Semantic Themes */
 .toast.toast-success {
     border-left-color: #10B981;

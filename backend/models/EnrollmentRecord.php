@@ -21,14 +21,16 @@ class EnrollmentRecord extends BaseModel {
      * Create enrollment record
      */
     public function create(array $data): int {
-        $sql = "INSERT INTO enrollment_records (student_id, program, major, year_level, academic_year, semester, enrollment_status, date_enrolled, created_at, updated_at)
-                VALUES (:student_id, :program, :major, :year_level, :academic_year, :semester, :enrollment_status, :date_enrolled, NOW(), NOW())";
+        $sql = "INSERT INTO enrollment_records (student_id, program, education_level, major, year_level, section, academic_year, semester, enrollment_status, date_enrolled, created_at, updated_at)
+            VALUES (:student_id, :program, :education_level, :major, :year_level, :section, :academic_year, :semester, :enrollment_status, :date_enrolled, NOW(), NOW())";
         
         $this->execute($sql, [
             'student_id'        => $data['student_id'],
             'program'           => $data['program'],
+            'education_level'   => $data['education_level'] ?? null,
             'major'             => $data['major'] ?? 'General',
             'year_level'        => $data['year_level'],
+            'section'           => $data['section'] ?? null,
             'academic_year'     => $data['academic_year'],
             'semester'          => $data['semester'],
             'enrollment_status' => $data['enrollment_status'] ?? 'Officially Enrolled',

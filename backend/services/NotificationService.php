@@ -51,4 +51,11 @@ class NotificationService {
     public function markAllRead(int $userId): bool {
         return $this->notificationModel->markAllAsRead($userId);
     }
+
+    /**
+     * Delete a notification owned by a user
+     */
+    public function delete(int $notificationId, int $userId): bool {
+        return $this->notificationModel->deleteForUser($notificationId, $userId);
+    }
 }

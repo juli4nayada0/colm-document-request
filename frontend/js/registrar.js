@@ -70,8 +70,13 @@ const RegistrarApp = {
 
         const studSearch = document.getElementById('studSearchInput');
         const studProgram = document.getElementById('studProgramFilter');
+        const studentFilters = ['studEducationFilter', 'studGradeFilter', 'studSectionFilter', 'studYearFilter', 'studCourseFilter'];
         if (studSearch) studSearch.addEventListener('input', utils.debounce(() => this.loadStudents(1), 350));
         if (studProgram) studProgram.addEventListener('change', () => this.loadStudents(1));
+        studentFilters.forEach(id => {
+            const filter = document.getElementById(id);
+            if (filter) filter.addEventListener('change', () => this.loadStudents(1));
+        });
     },
 
     setupKpiFilters() {
@@ -350,8 +355,21 @@ const RegistrarApp = {
         try {
             const search = document.getElementById('studSearchInput')?.value || '';
             const program = document.getElementById('studProgramFilter')?.value || '';
+            const education_level = document.getElementById('studEducationFilter')?.value || '';
+            const gradeLevel = document.getElementById('studGradeFilter')?.value || '';
+            const collegeYear = document.getElementById('studYearFilter')?.value || '';
+            const section = document.getElementById('studSectionFilter')?.value || '';
+            const course = document.getElementById('studCourseFilter')?.value || '';
 
-            const res = await api.get('/students', { page, limit: 15, search, program });
+            const res = await api.get('/students', {
+                page,
+                limit: 15,
+                search,
+                program: course || program,
+                education_level,
+                year_level: gradeLevel || collegeYear,
+                section
+            });
             const records = res.data || [];
             const meta = res.meta || {};
 
@@ -370,7 +388,7 @@ const RegistrarApp = {
                     </td>
                     <td>
                         <span class="primary-cell-text">${utils.escapeHtml(s.program || '—')}</span>
-                        <div class="secondary-cell-text">${s.year_level || ''} • ${s.academic_year || ''}</div>
+                        <div class="secondary-cell-text">${s.year_level || ''} ${s.section ? `• ${utils.escapeHtml(s.section)}` : ''} • ${s.academic_year || ''}</div>
                     </td>
                     <td>${utils.escapeHtml(s.email)}</td>
                     <td>${utils.escapeHtml(s.contact_number)}</td>

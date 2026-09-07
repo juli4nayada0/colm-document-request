@@ -100,6 +100,8 @@ elseif ($path === '/users' && $requestMethod === 'GET') {
 // 3. STUDENT ROUTES & CSV IMPORT
 elseif ($path === '/students' && $requestMethod === 'GET') {
     (new StudentController())->index();
+} elseif ($path === '/students/deactivate-all' && in_array($requestMethod, ['PATCH', 'POST'], true)) {
+    (new StudentController())->deactivateAll();
 } elseif ($path === '/students' && $requestMethod === 'POST') {
     (new StudentController())->store();
 } elseif ($path === '/students/me' && $requestMethod === 'GET') {
@@ -182,6 +184,8 @@ elseif (preg_match('#^/requests/(\d+)/release$#', $path, $matches) && $requestMe
 // 9. NOTIFICATION ROUTES
 elseif ($path === '/notifications' && $requestMethod === 'GET') {
     (new NotificationController())->index();
+} elseif (preg_match('#^/notifications/(\d+)$#', $path, $matches) && $requestMethod === 'DELETE') {
+    (new NotificationController())->delete((int)$matches[1]);
 } elseif (preg_match('#^/notifications/(\d+)/read$#', $path, $matches) && in_array($requestMethod, ['PATCH', 'POST'], true)) {
     (new NotificationController())->markRead((int)$matches[1]);
 } elseif ($path === '/notifications/read-all' && in_array($requestMethod, ['PATCH', 'POST'], true)) {

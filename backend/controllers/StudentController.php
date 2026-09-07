@@ -55,8 +55,10 @@ class StudentController {
         $program = !empty($_GET['program']) ? SecurityHelper::sanitizeString($_GET['program']) : null;
         $yearLevel = !empty($_GET['year_level']) ? SecurityHelper::sanitizeString($_GET['year_level']) : null;
         $status = !empty($_GET['status']) ? SecurityHelper::sanitizeString($_GET['status']) : null;
+        $educationLevel = !empty($_GET['education_level']) ? SecurityHelper::sanitizeString($_GET['education_level']) : null;
+        $section = !empty($_GET['section']) ? SecurityHelper::sanitizeString($_GET['section']) : null;
 
-        $result = $this->studentModel->getList($page, $limit, $search, $program, $yearLevel, $status);
+        $result = $this->studentModel->getList($page, $limit, $search, $program, $yearLevel, $status, $educationLevel, $section);
 
         ResponseHelper::success($result['records'], 'Students retrieved.', 200, [
             'total' => $result['total'],
@@ -64,6 +66,33 @@ class StudentController {
             'limit' => $result['limit'],
             'pages' => $result['pages']
         ]);
+    }
+
+    /**
+     * PATCH /api/v1/students/deactivate-all
+     */
+    public function deactivateAll(): void {
+        RoleMiddleware::authorize($this->currentUser, ['Admin']);
+
+        $data = json_decode(file_get_contents('php://input'), true) ?? [];
+        $filters = [];
+        foreach (['program', 'year_level', 'education_level', 'section'] as $field) {
+            if (!empty($data[$field])) {
+                $filters[$field] = SecurityHelper::sanitizeString($data[$field]);
+            }
+        }
+
+        $count = $this->studentModel->deactivateAccounts($filters);
+        $this->auditService->log(
+            $this->currentUser['user_id'],
+            'STUDENT_ACCOUNTS_DEACTIVATED',
+            'users',
+            'bulk',
+            null,
+            ['filters' => $filters, 'affected_accounts' => $count]
+        );
+
+        ResponseHelper::success(['affected_accounts' => $count], "{$count} student account(s) deactivated.");
     }
 
     /**
