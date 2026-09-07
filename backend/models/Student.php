@@ -152,6 +152,38 @@ class Student extends BaseModel {
     }
 
     /**
+     * Get section values available for the latest enrollment records.
+     */
+    public function getSections(?string $educationLevel = null, ?string $yearLevel = null): array {
+        $conditions = ["e.section IS NOT NULL", "e.section <> ''"];
+        $params = [];
+
+        if (!empty($educationLevel)) {
+            $conditions[] = 'e.education_level = :education_level';
+            $params['education_level'] = $educationLevel;
+        }
+
+        if (!empty($yearLevel)) {
+            $conditions[] = 'e.year_level = :year_level';
+            $params['year_level'] = $yearLevel;
+        }
+
+        $sql = "SELECT DISTINCT e.section
+                FROM enrollment_records e
+                INNER JOIN (
+                    SELECT student_id, MAX(enrollment_id) AS max_id
+                    FROM enrollment_records GROUP BY student_id
+                ) latest ON latest.max_id = e.enrollment_id
+                WHERE " . implode(' AND ', $conditions) . "
+                ORDER BY e.section ASC";
+
+        return array_values(array_filter(array_map(
+            static fn(array $row): string => (string)$row['section'],
+            $this->fetchAll($sql, $params)
+        )));
+    }
+
+    /**
      * Deactivate student accounts matching directory filters.
      */
     public function deactivateAccounts(array $filters): int {

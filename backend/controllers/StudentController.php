@@ -69,6 +69,20 @@ class StudentController {
     }
 
     /**
+     * GET /api/v1/students/filter-options
+     */
+    public function filterOptions(): void {
+        RoleMiddleware::authorize($this->currentUser, ['Registrar', 'Personnel', 'Admin']);
+
+        $educationLevel = !empty($_GET['education_level']) ? SecurityHelper::sanitizeString($_GET['education_level']) : null;
+        $yearLevel = !empty($_GET['year_level']) ? SecurityHelper::sanitizeString($_GET['year_level']) : null;
+
+        ResponseHelper::success([
+            'sections' => $this->studentModel->getSections($educationLevel, $yearLevel)
+        ], 'Student filter options retrieved.');
+    }
+
+    /**
      * PATCH /api/v1/students/deactivate-all
      */
     public function deactivateAll(): void {

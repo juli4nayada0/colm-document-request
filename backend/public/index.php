@@ -98,7 +98,9 @@ elseif ($path === '/users' && $requestMethod === 'GET') {
 }
 
 // 3. STUDENT ROUTES & CSV IMPORT
-elseif ($path === '/students' && $requestMethod === 'GET') {
+elseif ($path === '/students/filter-options' && $requestMethod === 'GET') {
+    (new StudentController())->filterOptions();
+} elseif ($path === '/students' && $requestMethod === 'GET') {
     (new StudentController())->index();
 } elseif ($path === '/students/deactivate-all' && in_array($requestMethod, ['PATCH', 'POST'], true)) {
     (new StudentController())->deactivateAll();

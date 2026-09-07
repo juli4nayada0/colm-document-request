@@ -70,13 +70,65 @@ const RegistrarApp = {
 
         const studSearch = document.getElementById('studSearchInput');
         const studProgram = document.getElementById('studProgramFilter');
-        const studentFilters = ['studEducationFilter', 'studGradeFilter', 'studSectionFilter', 'studYearFilter', 'studCourseFilter'];
+        const studentFilters = ['studEducationFilter', 'studSectionFilter', 'studYearFilter', 'studCourseFilter'];
         if (studSearch) studSearch.addEventListener('input', utils.debounce(() => this.loadStudents(1), 350));
         if (studProgram) studProgram.addEventListener('change', () => this.loadStudents(1));
+        const educationFilter = document.getElementById('studEducationFilter');
+        if (educationFilter) educationFilter.addEventListener('change', async () => {
+            this.updateYearFilterOptions(educationFilter.value);
+            await this.loadSectionOptions();
+            this.loadStudents(1);
+        });
+        const yearFilter = document.getElementById('studYearFilter');
+        if (yearFilter) yearFilter.addEventListener('change', async () => {
+            await this.loadSectionOptions();
+            this.loadStudents(1);
+        });
+        const sectionFilter = document.getElementById('studSectionFilter');
+        if (sectionFilter) sectionFilter.addEventListener('change', () => this.loadStudents(1));
         studentFilters.forEach(id => {
             const filter = document.getElementById(id);
-            if (filter) filter.addEventListener('change', () => this.loadStudents(1));
+            if (filter && !['studEducationFilter', 'studYearFilter', 'studSectionFilter'].includes(id)) {
+                filter.addEventListener('change', () => this.loadStudents(1));
+            }
         });
+        this.updateYearFilterOptions('');
+        this.loadSectionOptions();
+    },
+
+    updateYearFilterOptions(educationLevel) {
+        const yearFilter = document.getElementById('studYearFilter');
+        if (!yearFilter) return;
+
+        const options = educationLevel === 'Junior High School'
+            ? ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10']
+            : educationLevel === 'Senior High School'
+                ? ['Grade 11', 'Grade 12']
+                : ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+        const label = educationLevel === 'Junior High School'
+            ? 'All Junior High Year'
+            : educationLevel === 'Senior High School'
+                ? 'All Senior High Year'
+                : 'All College Years';
+
+        yearFilter.innerHTML = `<option value="">${label}</option>` + options
+            .map(option => `<option value="${option}">${option}</option>`).join('');
+    },
+
+    async loadSectionOptions() {
+        const sectionFilter = document.getElementById('studSectionFilter');
+        if (!sectionFilter) return;
+
+        const education_level = document.getElementById('studEducationFilter')?.value || '';
+        const year_level = document.getElementById('studYearFilter')?.value || '';
+        try {
+            const res = await api.get('/students/filter-options', { education_level, year_level });
+            const sections = res.data?.sections || [];
+            sectionFilter.innerHTML = '<option value="">All Sections</option>' + sections
+                .map(section => `<option value="${utils.escapeHtml(section)}">Section ${utils.escapeHtml(section)}</option>`).join('');
+        } catch (e) {
+            sectionFilter.innerHTML = '<option value="">All Sections</option>';
+        }
     },
 
     setupKpiFilters() {
@@ -356,8 +408,7 @@ const RegistrarApp = {
             const search = document.getElementById('studSearchInput')?.value || '';
             const program = document.getElementById('studProgramFilter')?.value || '';
             const education_level = document.getElementById('studEducationFilter')?.value || '';
-            const gradeLevel = document.getElementById('studGradeFilter')?.value || '';
-            const collegeYear = document.getElementById('studYearFilter')?.value || '';
+            const yearLevel = document.getElementById('studYearFilter')?.value || '';
             const section = document.getElementById('studSectionFilter')?.value || '';
             const course = document.getElementById('studCourseFilter')?.value || '';
 
@@ -367,7 +418,7 @@ const RegistrarApp = {
                 search,
                 program: course || program,
                 education_level,
-                year_level: gradeLevel || collegeYear,
+                year_level: yearLevel,
                 section
             });
             const records = res.data || [];
