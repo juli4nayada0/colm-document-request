@@ -23,13 +23,60 @@ const AdminApp = {
         const studentEducationFilter = document.getElementById('adminStudentEducationFilter');
         const studentYearFilter = document.getElementById('adminStudentYearFilter');
         const studentCourseFilter = document.getElementById('adminStudentCourseFilter');
+        const studentSectionFilter = document.getElementById('adminStudentSectionFilter');
 
         if (userSearch) userSearch.addEventListener('input', utils.debounce(() => this.loadUsers(1), 350));
         if (roleFilter) roleFilter.addEventListener('change', () => this.loadUsers(1));
         if (statusFilter) statusFilter.addEventListener('change', () => this.loadUsers(1));
-        if (studentEducationFilter) studentEducationFilter.addEventListener('change', () => this.loadStudents());
-        if (studentYearFilter) studentYearFilter.addEventListener('change', () => this.loadStudents());
+        if (studentEducationFilter) studentEducationFilter.addEventListener('change', async () => {
+            this.updateStudentYearOptions(studentEducationFilter.value);
+            await this.loadStudentSectionOptions();
+            this.loadStudents();
+        });
+        if (studentYearFilter) studentYearFilter.addEventListener('change', async () => {
+            await this.loadStudentSectionOptions();
+            this.loadStudents();
+        });
         if (studentCourseFilter) studentCourseFilter.addEventListener('change', () => this.loadStudents());
+        if (studentSectionFilter) studentSectionFilter.addEventListener('change', () => this.loadStudents());
+
+        this.updateStudentYearOptions('');
+        this.loadStudentSectionOptions();
+    },
+
+    updateStudentYearOptions(educationLevel) {
+        const yearFilter = document.getElementById('adminStudentYearFilter');
+        if (!yearFilter) return;
+
+        const options = educationLevel === 'Junior High School'
+            ? ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10']
+            : educationLevel === 'Senior High School'
+                ? ['Grade 11', 'Grade 12']
+                : ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+        const label = educationLevel === 'Junior High School'
+            ? 'All Junior High Year'
+            : educationLevel === 'Senior High School'
+                ? 'All Senior High Year'
+                : 'All College Years';
+
+        yearFilter.innerHTML = `<option value="">${label}</option>` + options
+            .map(option => `<option value="${option}">${option}</option>`).join('');
+    },
+
+    async loadStudentSectionOptions() {
+        const sectionFilter = document.getElementById('adminStudentSectionFilter');
+        if (!sectionFilter) return;
+
+        const education_level = document.getElementById('adminStudentEducationFilter')?.value || '';
+        const year_level = document.getElementById('adminStudentYearFilter')?.value || '';
+        try {
+            const res = await api.get('/students/filter-options', { education_level, year_level });
+            const sections = res.data?.sections || [];
+            sectionFilter.innerHTML = '<option value="">All Sections</option>' + sections
+                .map(section => `<option value="${utils.escapeHtml(section)}">Section ${utils.escapeHtml(section)}</option>`).join('');
+        } catch (e) {
+            sectionFilter.innerHTML = '<option value="">All Sections</option>';
+        }
     },
 
     async loadStudents() {
@@ -41,7 +88,8 @@ const AdminApp = {
             const year_level = document.getElementById('adminStudentYearFilter')?.value || '';
             const program = document.getElementById('adminStudentCourseFilter')?.value || '';
             const education_level = document.getElementById('adminStudentEducationFilter')?.value || '';
-            const res = await api.get('/students', { page: 1, limit: 100, program, year_level, education_level });
+            const section = document.getElementById('adminStudentSectionFilter')?.value || '';
+            const res = await api.get('/students', { page: 1, limit: 100, program, year_level, education_level, section });
             const records = res.data || [];
 
             if (records.length === 0) {
@@ -66,12 +114,13 @@ const AdminApp = {
         const year_level = document.getElementById('adminStudentYearFilter')?.value || '';
         const program = document.getElementById('adminStudentCourseFilter')?.value || '';
         const education_level = document.getElementById('adminStudentEducationFilter')?.value || '';
-        const scope = [education_level, year_level, program].filter(Boolean).join(' / ') || 'all active student accounts';
+        const section = document.getElementById('adminStudentSectionFilter')?.value || '';
+        const scope = [education_level, year_level, section, program].filter(Boolean).join(' / ') || 'all active student accounts';
 
         if (!window.confirm(`Deactivate ${scope}? This will disable matching student logins.`)) return;
 
         try {
-            const res = await api.patch('/students/deactivate-all', { year_level, program, education_level });
+            const res = await api.patch('/students/deactivate-all', { year_level, program, education_level, section });
             Toast.success(res.message || 'Student accounts deactivated.');
             await this.loadStudents();
         } catch (e) {
